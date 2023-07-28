@@ -3,7 +3,7 @@
 PSQL="psql --username=freecodecamp --dbname=random_number_guess -t --no-align -c"
 HIGH=1000
 RAND_INT=$((1 + $RANDOM % $HIGH))
-echo $RAND_INT
+#echo $RAND_INT
 
 #prompt the user for a username with Enter your username
 #take a username as input. allow usernames that are 22 characters
@@ -13,7 +13,7 @@ read USERNAME
 
 USERID=$($PSQL "SELECT user_id FROM users WHERE '$USERNAME' = username")
 GAMES_PLAYED=$($PSQL "SELECT games_played FROM users WHERE '$USERNAME' = username")
-GUESS_RECORD=$($PSQL "SELECT guess_record FROM users WHERE '$USERNAME' = username")
+BEST_GAME=$($PSQL "SELECT guess_record FROM users WHERE '$USERNAME' = username")
 GUESS_COUNT=1
 if [[ -z $USERID ]]
 then
@@ -45,7 +45,15 @@ elif [[ "$USERS_GUESS" -lt "$RAND_INT" ]];
 elif  [[ "$USERS_GUESS" -eq "$RAND_INT" ]];
   then 
   echo "You guessed it in $GUESS_COUNT tries. The secret number was $RAND_INT. Nice job!"
+  ((GAMES_PLAYED=GAMES_PLAYED+1))
 fi
+UPDATE_GAMES_PLAYED=$($PSQL "UPDATE users SET games_played ='$GAMES_PLAYED' WHERE '$USERNAME' = username")
+GUESS_RECORD=$($PSQL "SELECT guess_record FROM users WHERE '$USERNAME' = username")
+if [[ "$GUESS_COUNT" -lt "$GUESS_RECORD" ]];
+  then 
+  UPDATE_GUESS_RECORD=$($PSQL "UPDATE users SET guess_record = '$GUESS_COUNT' WHERE '$USERNAME' = username")
+fi
+
 }
 
 NUMBER_GUESS
