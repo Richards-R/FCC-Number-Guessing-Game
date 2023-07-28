@@ -49,7 +49,9 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.users (
     user_id integer NOT NULL,
-    username character varying(22) NOT NULL
+    username character varying(22) NOT NULL,
+    games_played integer,
+    guess_record integer
 );
 
 
@@ -88,24 +90,29 @@ ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.u
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
-INSERT INTO public.users VALUES (5, 'Reon');
-INSERT INTO public.users VALUES (6, 'joe');
-INSERT INTO public.users VALUES (7, 'reon');
-INSERT INTO public.users VALUES (8, 'Joe');
-INSERT INTO public.users VALUES (9, 'user_1690554529525');
-INSERT INTO public.users VALUES (10, 'user_1690554529524');
-INSERT INTO public.users VALUES (11, 'r');
-INSERT INTO public.users VALUES (12, 'user_1690556518728');
-INSERT INTO public.users VALUES (13, 'user_1690556518727');
-INSERT INTO public.users VALUES (14, 'user_1690556542928');
-INSERT INTO public.users VALUES (15, 'user_1690556542927');
+INSERT INTO public.users VALUES (44, 'r', NULL, NULL);
+INSERT INTO public.users VALUES (45, 'joe', NULL, NULL);
+INSERT INTO public.users VALUES (46, 're', NULL, NULL);
+INSERT INTO public.users VALUES (47, 'ret', NULL, NULL);
+INSERT INTO public.users VALUES (48, 'rttt', NULL, NULL);
+INSERT INTO public.users VALUES (49, 'sfasfa', NULL, NULL);
+INSERT INTO public.users VALUES (50, 'asfdykjggg', NULL, NULL);
+INSERT INTO public.users VALUES (51, 'fffff', NULL, NULL);
+INSERT INTO public.users VALUES (52, 'ttttt', NULL, NULL);
+INSERT INTO public.users VALUES (53, 'wetwetwetr', NULL, NULL);
+INSERT INTO public.users VALUES (54, 'user_1690561873065', NULL, NULL);
+INSERT INTO public.users VALUES (55, 'user_1690561873064', NULL, NULL);
+INSERT INTO public.users VALUES (56, 'user_1690561886493', NULL, NULL);
+INSERT INTO public.users VALUES (57, 'user_1690561886492', NULL, NULL);
+INSERT INTO public.users VALUES (58, 'user_1690561895819', NULL, NULL);
+INSERT INTO public.users VALUES (59, 'user_1690561895818', NULL, NULL);
 
 
 --
 -- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.users_user_id_seq', 15, true);
+SELECT pg_catalog.setval('public.users_user_id_seq', 59, true);
 
 
 --
@@ -119,5 +126,4 @@ ALTER TABLE ONLY public.users
 --
 -- PostgreSQL database dump complete
 --
-
 
