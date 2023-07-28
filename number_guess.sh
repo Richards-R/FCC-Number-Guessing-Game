@@ -12,6 +12,9 @@ echo Enter your username:
 read USERNAME
 
 USERID=$($PSQL "SELECT user_id FROM users WHERE '$USERNAME' = username")
+GAMES_PLAYED=$($PSQL "SELECT games_played FROM users WHERE '$USERNAME' = username")
+GUESS_RECORD=$($PSQL "SELECT guess_record FROM users WHERE '$USERNAME' = username")
+GUESS_COUNT=1
 if [[ -z $USERID ]]
 then
   NEW_USER=$($PSQL "INSERT INTO users(username) VALUES ('$USERNAME')")
@@ -23,32 +26,27 @@ fi
 echo -e "\nGuess the secret number between 1 and 1000:"
 read USERS_GUESS
 NUMBER_GUESS() {
-
+echo "GC: $GUESS_COUNT"
 if ! [[ "$USERS_GUESS" =~ ^[0-9]+$ ]]; 
   then echo "That is not an integer, guess again:"
+   ((GUESS_COUNT=GUESS_COUNT+1))
   read USERS_GUESS
   NUMBER_GUESS
 elif [[ "$USERS_GUESS" -gt "$RAND_INT" ]];
   then echo "It's lower than that, guess again:"
+   ((GUESS_COUNT=GUESS_COUNT+1))
   read USERS_GUESS
   NUMBER_GUESS
 elif [[ "$USERS_GUESS" -lt "$RAND_INT" ]];
   then echo "It's higher than that, guess again:"
+   ((GUESS_COUNT=GUESS_COUNT+1))
   read USERS_GUESS
   NUMBER_GUESS
 elif  [[ "$USERS_GUESS" -eq "$RAND_INT" ]];
-  then echo "You guessed it in <number_of_guesses> tries. The secret number was $RAND_INT. Nice job!"
+  then 
+  echo "You guessed it in $GUESS_COUNT tries. The secret number was $RAND_INT. Nice job!"
 fi
 }
 
 NUMBER_GUESS
 
-#If that username has been used before, it should print Welcome back, 
-#<username>! You have played <games_played> games, and your best game 
-#took <best_game> guesses., with <username> being a users name from the database,
-# <games_played> being the total number of games that user has played, 
-#and <best_game> being the fewest number of guesses it took that user to win 
-# the game
-
-
-# The next line printed should be Guess the secret number between 1 and 1000: and input from the user should be read
